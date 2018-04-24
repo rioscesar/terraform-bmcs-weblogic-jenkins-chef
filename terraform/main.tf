@@ -161,7 +161,7 @@ resource "null_resource" "managed_server_instance_config" {
           user_key = "${file(var.chef_private_key)}"
 
           connection {
-            host = "${var.public-ip}"
+            host = "${data.oci_core_vnic.InstanceVnic.public_ip_address}"
             type = "ssh"
             user = "opc"
             private_key = "${file(var.ssh_private_key_path)}"
