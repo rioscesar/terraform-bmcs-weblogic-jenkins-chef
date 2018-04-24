@@ -3,7 +3,7 @@ node {
     stage 'Checkout'
  
     // Get some code from a GitHub repository
-    git credentialsId: 'GitHub', url: 'https://eshneken@github.com/eshneken/terraform-bmcs-weblogic-jenkins-chef.git'
+    git credentialsId: 'GitHub', url: 'https://github.com/rioscesar/terraform-oci-weblogic-jenkins-chef.git'
 
     // Mark the code build 'plan'....
     stage name: 'Destroy', concurrency: 1

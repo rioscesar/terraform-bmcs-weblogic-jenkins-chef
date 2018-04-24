@@ -1,6 +1,6 @@
-name 'bmcs_servers'
+name 'oci_servers'
 maintainer 'The Authors'
-maintainer_email 'ed.shnekendorf@oracle.com'
+maintainer_email 'cesar.rios@oracle.com'
 license 'All Rights Reserved'
 description 'Installs/Configures Oracle BMCS Server'
 long_description 'Installs/Configures Oracle BMCS Servers'

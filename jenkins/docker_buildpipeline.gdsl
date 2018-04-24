@@ -4,7 +4,7 @@ node {
     stage 'Checkout'
 
     // Get some code from a GitHub repository
-    git credentialsId: 'GitHub', url: 'https://eshneken@github.com/eshneken/terraform-bmcs-weblogic-jenkins-chef.git'
+    git credentialsId: 'GitHub', url: 'https://github.com/rioscesar/terraform-oci-weblogic-jenkins-chef.git'
 
     // Mark the code build 'plan'....
     stage name: 'Plan', concurrency: 1
@@ -82,7 +82,7 @@ node {
 
             def applyExitCode = readFile('status.apply').trim()
             if (applyExitCode == "0") {
-                sh "oci os bucket create -ns cloud_pursuit_appdev --name $Environment_Identifier  --compartment-id ocid1.compartment.oc1..aaaaaaaa5kobe5xkyi5qfobvaocgolsby7b3adwfe5u23xrarjcpu4z6rw2a"
+                sh "oci os bucket create -ns cloud_pursuit_appdev --name $Environment_Identifier  --ocid1.compartment.oc1..aaaaaaaazx6rv4c3fw4xp27o35e237g5jwi5bdullgryj35qzhxcugypi6da"
                 sh "oci os object put -ns cloud_pursuit_appdev -bn $Environment_Identifier --name terraform.tfstate --file ./terraform.tfstate"
                 sh "oci os object put -ns cloud_pursuit_appdev -bn $Environment_Identifier --name current_run.tfvars --file ./current_run.tfvars"
             } else {
