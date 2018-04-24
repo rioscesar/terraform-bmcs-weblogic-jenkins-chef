@@ -1,4 +1,4 @@
-name 'oci_servers'
+name 'bmcs_servers'
 maintainer 'The Authors'
 maintainer_email 'cesar.rios@oracle.com'
 license 'All Rights Reserved'

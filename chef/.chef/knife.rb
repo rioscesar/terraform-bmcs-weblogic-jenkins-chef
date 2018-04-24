@@ -7,3 +7,5 @@ node_name                "rioscesar"
 client_key               "#{current_dir}/eshneken-chef.pem"
 chef_server_url          "https://api.chef.io/organizations/solution-hub"
 cookbook_path            ["#{current_dir}/../cookbooks"]
+
+knife[:editor] = "emacs"
