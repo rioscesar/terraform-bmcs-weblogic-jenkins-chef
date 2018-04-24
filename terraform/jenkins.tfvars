@@ -1,7 +1,7 @@
-fingerprint                     = "57:20:5d:2b:81:69:2f:06:8a:6c:a2:3a:7a:6d:d3:fd"
-user_ocid                       = "ocid1.user.oc1..aaaaaaaapvqieubwrk7iv62rex3kkyqrlctg2qzomcnsmrlcf2jsnsmne3dq"
-tenancy_ocid                    = "ocid1.tenancy.oc1..aaaaaaaay5hqvxneg5efvaqft7rwjmuk7xpsfjzr23ncxsxmqhr4utsse3ma"
-compartment_ocid                = "ocid1.compartment.oc1..aaaaaaaa5kobe5xkyi5qfobvaocgolsby7b3adwfe5u23xrarjcpu4z6rw2a"
+fingerprint                     = "fb:93:b0:6c:ac:f2:42:c7:97:00:43:82:f3:27:97:91"
+user_ocid                       = "ocid1.user.oc1..aaaaaaaacnlcisahazqaqj7h5au76jksb32ckgs6o6anihyzxue6kmmsy3tq"
+tenancy_ocid                    = "ocid1.tenancy.oc1..aaaaaaaa4m5zwuyl5dlfsmbsraau4o2hdyd6zxrouzit4yeq3453y7sehcoq"
+compartment_ocid                = "ocid1.compartment.oc1..aaaaaaaazx6rv4c3fw4xp27o35e237g5jwi5bdullgryj35qzhxcugypi6da"
 region                          = "us-ashburn-1"
 
 private_key_path                = "./userdata/eshneken-bmcs.pem"
@@ -10,12 +10,12 @@ ssh_private_key_path            = "./userdata/eshneken-opc"
 
 docker_registry_location_path   = "./userdata/docker_registry_ip_and_port.cfg"
 
-chef_server_url                 = "https://api.chef.io/organizations/eshneken"
+chef_server_url                 = "https://api.chef.io/organizations/solution-hub"
 chef_username                   = "eshneken"
-chef_private_key                = "./userdata/eshneken-chef-io.pem"
+chef_private_key                = "./userdata/eshneken-chef.pem"
 
-region                          = "<REGION>"
-identifier                      = "<IDENTIFIER>"
-ad                              = "<AD>"
+region                          = "us-ashburn-1"
+identifier                      = "hub"
+ad                              = "iad"
 
-docker_application_tag          = "<DOCKER_APPLICATION_TAG>"
+docker_application_tag          = "solution-hub"
