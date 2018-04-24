@@ -11,7 +11,7 @@ ssh_private_key_path            = "./userdata/eshneken-opc"
 docker_registry_location_path   = "./userdata/docker_registry_ip_and_port.cfg"
 
 chef_server_url                 = "https://api.chef.io/organizations/solution-hub"
-chef_username                   = "eshneken"
+chef_username                   = "rioscesar"
 chef_private_key                = "./userdata/eshneken-chef.pem"
 
 region                          = "us-ashburn-1"
