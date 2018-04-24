@@ -105,7 +105,7 @@ resource "oci_core_security_list" "SingleInstanceSecList" {
 
 # Availability Domain
 resource "oci_core_subnet" "SingleInstanceAD1" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.ad - 1],"name")}"
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[0],"name")}"
   cidr_block          = "10.0.1.0/24"
   display_name        = "${var.identifier}-docker-wls-ad-1"
   compartment_id      = "${var.compartment_ocid}"
@@ -117,15 +117,10 @@ resource "oci_core_subnet" "SingleInstanceAD1" {
 
 # Compute Instance
 resource "oci_core_instance" "SingleInstance-Compute-1" {
-  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.ad - 1],"name")}"
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[0],"name")}"
   compartment_id      = "${var.compartment_ocid}"
   display_name        = "${var.identifier}-docker-wls-server"
   image               = "${lookup(data.oci_core_images.OLImageOCID.images[0], "id")}"
-
-  create_vnic_details {
-    subnet_id = "${oci_core_subnet.SingleInstanceAD1.id}"
-    hostname_label = "docker-wls"
-  }
 
   metadata {
     ssh_authorized_keys = "${file(var.ssh_public_key_path)}"
@@ -136,19 +131,15 @@ resource "oci_core_instance" "SingleInstance-Compute-1" {
 ### Display Public IP of Instance
 
 # Gets a list of vNIC attachments on the instance
-# data "oci_core_vnic_attachments" "InstanceVnics" {
-# compartment_id = "${var.compartment_ocid}"
-# availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.ad - 1],"name")}"
-# instance_id = "${oci_core_instance.SingleInstance-Compute-1.id}"
-# }
+data "oci_core_vnic_attachments" "InstanceVnics" {
+  compartment_id = "${var.compartment_ocid}"
+  availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[0],"name")}"
+  instance_id = "${oci_core_instance.SingleInstance-Compute-1.id}"
+}
 
-# # Gets the OCID of the first (default) vNIC
-# data "oci_core_vnic" "InstanceVnic" {
-# vnic_id = "${lookup(data.oci_core_vnic_attachments.InstanceVnics.vnic_attachments[0],"vnic_id")}"
-# }
-
-output "public-ip" {
-  value = "${oci_core_instance.SingleInstance-Compute-1.public_ip}"
+# Gets the OCID of the first (default) vNIC
+data "oci_core_vnic" "InstanceVnic" {
+  vnic_id = "${lookup(data.oci_core_vnic_attachments.InstanceVnics.vnic_attachments[0],"vnic_id")}"
 }
 
 ### Provision Server with Chef -> Run Weblogic Docker Recipe
