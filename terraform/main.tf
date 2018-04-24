@@ -122,25 +122,33 @@ resource "oci_core_instance" "SingleInstance-Compute-1" {
   display_name        = "${var.identifier}-docker-wls-server"
   image               = "${lookup(data.oci_core_images.OLImageOCID.images[0], "id")}"
 
+  create_vnic_details {
+    subnet_id = "${oci_core_subnet.SingleInstanceAD1.id}"
+    hostname_label = "docker-wls"
+  }
+
   metadata {
     ssh_authorized_keys = "${file(var.ssh_public_key_path)}"
   }
   shape     = "VM.Standard1.2"
-  subnet_id = "${oci_core_subnet.SingleInstanceAD1.id}"
 }
 
 ### Display Public IP of Instance
 
 # Gets a list of vNIC attachments on the instance
-data "oci_core_vnic_attachments" "InstanceVnics" {
-compartment_id = "${var.compartment_ocid}"
-availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.ad - 1],"name")}"
-instance_id = "${oci_core_instance.SingleInstance-Compute-1.id}"
-}
+# data "oci_core_vnic_attachments" "InstanceVnics" {
+# compartment_id = "${var.compartment_ocid}"
+# availability_domain = "${lookup(data.oci_identity_availability_domains.ADs.availability_domains[var.ad - 1],"name")}"
+# instance_id = "${oci_core_instance.SingleInstance-Compute-1.id}"
+# }
 
-# Gets the OCID of the first (default) vNIC
-data "oci_core_vnic" "InstanceVnic" {
-vnic_id = "${lookup(data.oci_core_vnic_attachments.InstanceVnics.vnic_attachments[0],"vnic_id")}"
+# # Gets the OCID of the first (default) vNIC
+# data "oci_core_vnic" "InstanceVnic" {
+# vnic_id = "${lookup(data.oci_core_vnic_attachments.InstanceVnics.vnic_attachments[0],"vnic_id")}"
+# }
+
+output "public-ip" {
+  value = "${oci_core_instance.SingleInstance-Compute-1.public_ip}"
 }
 
 ### Provision Server with Chef -> Run Weblogic Docker Recipe
@@ -162,7 +170,7 @@ resource "null_resource" "managed_server_instance_config" {
           user_key = "${file(var.chef_private_key)}"
 
           connection {
-            host = "${data.oci_core_vnic.InstanceVnic.public_ip_address}"
+            host = "${var.public-ip}"
             type = "ssh"
             user = "opc"
             private_key = "${file(var.ssh_private_key_path)}"
