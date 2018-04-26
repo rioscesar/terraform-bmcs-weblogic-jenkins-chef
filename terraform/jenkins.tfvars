@@ -18,4 +18,4 @@ region                          = "us-ashburn-1"
 identifier                      = "hub"
 ad                              = "iad"
 
-docker_application_tag          = "solution-hub"
+docker_application_tag          = "wls_sample_app"
